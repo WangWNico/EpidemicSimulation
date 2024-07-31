@@ -1,4 +1,4 @@
-package edu.rpi.cs.csci4963.u24.rcsid.hw02.gol_gui.graph;
+package edu.rpi.cs.csci4963.u24.wangn4.hw04.gol_gui.graph;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
