@@ -37,9 +37,6 @@ public class InfectionController {
     private String csvFile;
 
     @FXML
-    private Label welcomeText;
-
-    @FXML
     private MenuBar menuBar;
 
     @FXML
@@ -241,11 +238,6 @@ public class InfectionController {
             int infectedCount = (int) infection.getGraph().getNodes().stream().filter(node -> node.getState() == NodeState.INFECTED).count();
             int recoveredCount = (int) infection.getGraph().getNodes().stream().filter(node -> node.getState() == NodeState.RECOVERED).count();
             int deadCount = (int) infection.getGraph().getNodes().stream().filter(node -> node.getState() == NodeState.DEAD).count();
-
-            // Todo Testing Purposes Remove
-            System.out.println(infectedCount);
-            System.out.println(recoveredCount);
-            System.out.println(deadCount);
 
             infectedSeries.getData().add(new XYChart.Data<>(tickCount, infectedCount));
             recoveredSeries.getData().add(new XYChart.Data<>(tickCount, recoveredCount));

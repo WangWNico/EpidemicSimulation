@@ -55,22 +55,21 @@ public class Infection {
                 }
                 String parent = values[0];
                 Node parentNode = graph.getNode(parent);
+                // infect the node based on the infection rate
                 if (parentNode == null) {
                     parentNode = new Node(parent, Math.random() < infectionRate ? NodeState.INFECTED : NodeState.SUSCEPTIBLE);
                     graph.addNode(parentNode);
                     infectionCount++;
-                    System.out.println("Added node: " + parent + " with state: " + parentNode.getState());
                 }
                 for (int i = 1; i < values.length; i++) {
                     String child = values[i];
                     Node childNode = graph.getNode(child);
+                    // infect the node based on the infection rate
                     if (childNode == null) {
                         childNode = new Node(child, Math.random() < infectionRate ? NodeState.INFECTED : NodeState.SUSCEPTIBLE);
                         graph.addNode(childNode);
-                        System.out.println("Added node: " + child + " with state: " + childNode.getState());
                     }
                     graph.addEdge(parentNode, childNode, "edge");
-                    System.out.println("Added edge: " + parent + " -> " + child);
                 }
             }
         } catch (IOException e) {
@@ -85,6 +84,7 @@ public class Infection {
         int totalInfected = 0;
         totalSusceptibleNeighbors = 0;
         for (Node node : graph.getNodes()) {
+            // if infected node, grab neighbors and infect based on force of infection
             if (node.getState() == NodeState.INFECTED) {
                 totalInfected++;
                 for (Edge edge : node.getChildren()) {
@@ -96,8 +96,6 @@ public class Infection {
                                 infectionCount++;
                                 child.setState(NodeState.INFECTED);
                                 child.updateInfectedTime();
-                                // Todo Testing Purposes Remove
-                                System.out.println("Infected: " + child.getId());
                             }
                         });
                     }
@@ -118,21 +116,18 @@ public class Infection {
     public synchronized void recover() {
         for (Node node : graph.getNodes()) {
             executor.submit(() -> {
+                // if infected node, recover or kill based on time infected and recovery rate
                 if (node.getState() == NodeState.INFECTED) {
                     if (node.getTimeInfected() == maxInfectionTime && Math.random() < recoveryRate) {
                         synchronized (node) {
                             node.setState(NodeState.RECOVERED);
                             infectionCount--;
-                            // Todo Testing Purposes Remove
-                            System.out.println("Recovered: " + node.getId());
                         }
                     }
                     else if (node.getTimeInfected() == maxInfectionTime) {
                         synchronized (node) {
                             node.setState(NodeState.DEAD);
                             infectionCount--;
-                            // Todo Testing Purposes Remove
-                            System.out.println("Dead: " + node.getId());
                         }
                     }
                     else synchronized (node) {
@@ -159,7 +154,6 @@ public class Infection {
      */
     public synchronized void updateForceOfInfection() {
         force_of_infection = (double) (prevForceOfInfection * prevInfectionCount + totalSusceptibleNeighbors) / infectionCount;
-        System.out.println("Force of Infection: " + force_of_infection);
     }
 
     /**
@@ -169,8 +163,6 @@ public class Infection {
      */
     public void setMaxInfectionTime(int maxInfectionTime) {
         this.maxInfectionTime = maxInfectionTime;
-        // Todo Testing Purposes Remove
-        System.out.println("Max Infection Time set to: " + maxInfectionTime);
     }
 
     /**
@@ -180,39 +172,6 @@ public class Infection {
      */
     public void setRecoveryRate(double recoveryRate) {
         this.recoveryRate = recoveryRate;
-        // Todo Testing purposes Remove
-        System.out.println("Recovery Rate set to: " + recoveryRate);
-    }
-
-    /**
-     * Sets the infection rate for nodes.
-     *
-     * @param infectionRate the new infection rate
-     */
-    public void setInfectionRate(double infectionRate) {
-        this.infectionRate = infectionRate;
-        // Todo Testing Purposes Remove
-        System.out.println("Infection Rate set to: " + infectionRate);
-    }
-
-    /**
-     * Sets the force of infection.
-     *
-     * @param forceOfInfection the new force of infection
-     */
-    public void setForceOfInfection(double forceOfInfection) {
-        this.force_of_infection = forceOfInfection;
-        // Todo Testing Purposes Remove
-        System.out.println("Force of Infection set to: " + forceOfInfection);
-    }
-
-    /**
-     * Gets the current force of infection.
-     *
-     * @return the current force of infection
-     */
-    public double getForceOfInfection() {
-        return force_of_infection;
     }
 
     /**
