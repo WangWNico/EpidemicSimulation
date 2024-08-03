@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                edu.rpi.cs.csci4963.u24.rcsid.hw02.gol_gui.graph/edu.rpi.cs.csci4963.u24.wangn4.hw04.gol_gui.graph.HelloApplication
+                                edu.rpi.cs.csci4963.u24.rcsid.hw02.gol_gui.graph/edu.rpi.cs.csci4963.u24.wangn4.hw04.InfectionApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
