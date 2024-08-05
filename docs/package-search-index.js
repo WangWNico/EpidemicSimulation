@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"edu.rpi.cs.csci4963.u24.wangn4.hw04.graph","l":"edu.rpi.cs.csci4963.u24.wangn4.hw04.graph"},{"m":"edu.rpi.cs.csci4963.u24.wangn4.hw04.graph","l":"edu.rpi.cs.csci4963.u24.wangn4.hw04.graph.infection_model"}];updateSearchResults();
